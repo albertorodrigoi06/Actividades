@@ -5,7 +5,7 @@
 #
 # El programa calcula los colores de una resistencia a partir
 # de su valor, y el valor total de n resistencias conectadas
-# en serie y en paralelo.
+# en serie y en paralelo. Todo funciona por linea de comandos.
 # ==========================================================
 
 import random
@@ -21,10 +21,6 @@ class Resistencia:
     # la posicion dentro del arreglo es el numero que vale el color
     NOMBRES = ["Negro", "Marron", "Rojo", "Naranja", "Amarillo",
                "Verde", "Azul", "Violeta", "Gris", "Blanco"]
-
-    # arreglo con el tono de cada color, para poder pintarlos
-    TONOS = ["#000000", "#8B4513", "#FF0000", "#FF8C00", "#FFFF00",
-             "#008000", "#0000FF", "#8A2BE2", "#808080", "#FFFFFF"]
 
     def __init__(self, valor):
         # atributo de la clase: el valor de la resistencia en ohmios
@@ -53,47 +49,6 @@ class Resistencia:
         print("Primera banda (primer digito) :", colores[0])
         print("Segunda banda (segundo digito):", colores[1])
         print("Tercera banda (multiplicador) :", colores[2])
-
-    def dibujar(self):
-        """Modo grafico: abre una ventana y dibuja la resistencia."""
-        try:
-            import tkinter
-        except:
-            print("No se pudo abrir el modo grafico en esta computadora.")
-            return
-
-        colores = self.obtener_colores()
-        indices = self.obtener_indices()
-
-        ventana = tkinter.Tk()
-        ventana.title("Resistencia de " + str(self.valor) + " ohms")
-        lienzo = tkinter.Canvas(ventana, width=520, height=260, bg="white")
-        lienzo.pack()
-
-        # los alambres de los lados
-        lienzo.create_line(40, 130, 150, 130, width=6, fill="#999999")
-        lienzo.create_line(370, 130, 480, 130, width=6, fill="#999999")
-
-        # el cuerpo de la resistencia
-        lienzo.create_rectangle(150, 85, 370, 175,
-                                fill="#D9B382", outline="black", width=2)
-
-        # las tres bandas de color
-        posiciones = [185, 245, 305]
-        for i in range(3):
-            x = posiciones[i]
-            lienzo.create_rectangle(x, 85, x + 25, 175,
-                                    fill=Resistencia.TONOS[indices[i]],
-                                    outline="black")
-
-        # los textos
-        lienzo.create_text(260, 30, text=str(self.valor) + " ohms",
-                           font=("Arial", 20, "bold"))
-        lienzo.create_text(260, 215,
-                           text=colores[0] + " - " + colores[1] + " - " + colores[2],
-                           font=("Arial", 14))
-
-        ventana.mainloop()
 
 
 # ==========================================================
@@ -169,10 +124,6 @@ class Aplicacion:
         resistencia = Resistencia(valor)
         print()
         resistencia.mostrar_colores()
-
-        ver = input("\nQuieres verla en modo grafico? (s/n): ")
-        if ver == "s" or ver == "S":
-            resistencia.dibujar()
 
     def opcion_serie(self):
         """Requerimiento 2: total de n resistencias en serie."""
