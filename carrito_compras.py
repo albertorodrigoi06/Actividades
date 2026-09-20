@@ -40,15 +40,16 @@ class Catalogo:
             Producto(3, "Monitor", "Electronica", 3200),
             Producto(4, "Audifonos", "Audio", 800),
             Producto(5, "Memoria USB", "Almacenamiento", 180),
-            Producto(6, "Laptop", "Electronica", 12500),
         ]
 
     def mostrar(self):
         print("\n=== CATALOGO DE PRODUCTOS ===")
+        print("  " + "-" * 46)
         print("  ID | Producto     | Categoria      | Precio")
         print("  " + "-" * 46)
         for p in self.productos:
             print(f"  {p.id_producto:<3}| {p.nombre:<13}| {p.categoria:<15}| ${p.precio}")
+        print("  " + "-" * 46)
 
     def buscar(self, dato):
         """Busca un producto por su ID (si se escribe un numero)
@@ -104,13 +105,14 @@ class Carrito:
         if len(self.items) == 0:
             print("  El carrito esta vacio.")
             return
+        print("  " + "-" * 48)
         print("  ID | Producto     | Precio | Cant. | Subtotal")
         print("  " + "-" * 48)
         for i in self.items:
             print(f"  {i.producto.id_producto:<3}| {i.producto.nombre:<13}|"
                   f" ${i.producto.precio:<6}| {i.cantidad:<6}| ${i.subtotal()}")
         print("  " + "-" * 48)
-        print(f"  TOTAL: ${self.total()}")
+        print("  " + ("TOTAL: $" + str(self.total())).rjust(48))
 
 
 # ==================== VALIDACION DE ENTRADAS ====================
@@ -143,82 +145,93 @@ class Tienda:
         p = self.catalogo.buscar(input("\nID o nombre del producto: "))
         if p is None:
             print("  El producto no existe en el catalogo.")
-        else:
-            print(f"  ID: {p.id_producto}   Producto: {p.nombre}")
-            print(f"  Categoria: {p.categoria}   Precio: ${p.precio}")
+            return
+        print(f"  ID del producto: {p.id_producto}")
+        print(f"  Producto: {p.nombre}")
+        print(f"  Categoria: {p.categoria}")
+        print(f"  Precio: ${p.precio}")
 
     def agregar_producto(self):
         self.catalogo.mostrar()
-        p = self.catalogo.buscar(input("\nID o nombre del producto a agregar: "))
+        p = self.catalogo.buscar(input("\nID del producto: "))
         if p is None:
             print("  El producto no existe en el catalogo.")
             return
-        print(f"  Producto: {p.nombre}   Precio unitario: ${p.precio}")
+        print(f"  Producto: {p.nombre}")
+        print(f"  Precio unitario: ${p.precio}")
         self.carrito.agregar(p, leer_cantidad("  Cantidad: "))
-        print("  Producto agregado al carrito!")
+        print("\n  Producto agregado al carrito!")
 
     def modificar_cantidad(self):
         self.carrito.mostrar()
         if len(self.carrito.items) == 0:
             return
-        item = self.carrito.buscar(input("\nID o nombre del producto a modificar: "))
+        item = self.carrito.buscar(input("\nID del producto a modificar: "))
         if item is None:
             print("  Ese producto no esta en el carrito.")
             return
-        print(f"  Producto: {item.producto.nombre}   Cantidad actual: {item.cantidad}")
+        print(f"  Producto: {item.producto.nombre}")
+        print(f"  Cantidad actual: {item.cantidad}")
         item.cantidad = leer_cantidad("  Nueva cantidad: ")
-        print("  Cantidad actualizada!")
-        print(f"  Nuevo subtotal: ${item.subtotal()}   Nuevo total: ${self.carrito.total()}")
+        print("\n  Cantidad actualizada!")
+        print(f"  Nuevo subtotal: ${item.subtotal()}")
+        print(f"  Nuevo total:    ${self.carrito.total()}")
 
     def eliminar_producto(self):
         self.carrito.mostrar()
         if len(self.carrito.items) == 0:
             return
-        item = self.carrito.buscar(input("\nID o nombre del producto a eliminar: "))
+        item = self.carrito.buscar(input("\nID del producto a eliminar: "))
         if item is None:
             print("  Ese producto no esta en el carrito.")
             return
-        if confirmar(f"  Seguro que desea eliminar {item.producto.nombre}? (s/n): "):
+        print(f"  Producto: {item.producto.nombre}")
+        if confirmar("  Esta seguro que desea eliminar este producto? (s/n): "):
             self.carrito.items.remove(item)
-            print("  Producto eliminado del carrito!")
+            print("\n  Producto eliminado del carrito!")
         else:
-            print("  Operacion cancelada.")
+            print("\n  Operacion cancelada.")
 
     def vaciar_carrito(self):
         if len(self.carrito.items) == 0:
             print("\n  El carrito ya esta vacio.")
-        elif confirmar("\n  Seguro que desea vaciar el carrito? (s/n): "):
+        elif confirmar("\n  Esta seguro que desea vaciar el carrito? (s/n): "):
             self.carrito.items = []
-            print("  Carrito vaciado!")
+            print("\n  Carrito vaciado!")
         else:
-            print("  Operacion cancelada.")
+            print("\n  Operacion cancelada.")
 
     def finalizar_compra(self):
         if len(self.carrito.items) == 0:
             print("\n  No puede finalizar la compra: el carrito esta vacio.")
             return
         print("\n=== RESUMEN DE COMPRA ===")
+        print("  " + "-" * 40)
         print("  ID | Producto     | Cant. | Subtotal")
         print("  " + "-" * 40)
         for i in self.carrito.items:
             print(f"  {i.producto.id_producto:<3}| {i.producto.nombre:<13}|"
                   f" {i.cantidad:<6}| ${i.subtotal()}")
         print("  " + "-" * 40)
-        print(f"  Productos distintos: {len(self.carrito.items)}")
-        print(f"  Total de articulos:  {self.carrito.total_articulos()}")
-        print(f"  Total a pagar:       ${self.carrito.total()}")
-        print("\n  Gracias por su compra!")
+        print(f"  Productos:     {len(self.carrito.items)}")
+        print(f"  Articulos:     {self.carrito.total_articulos()}")
+        print(f"  Total a pagar: ${self.carrito.total()}")
+        print("\n  Gracias por su compra.")
         self.carrito.items = []      # la compra se reinicia
 
     def ejecutar(self):
         """Ciclo principal del programa."""
         while True:
             print("\n=== CARRITO DE COMPRAS ===")
-            print("  1. Mostrar catalogo        6. Eliminar producto")
-            print("  2. Buscar producto         7. Vaciar carrito")
-            print("  3. Agregar al carrito      8. Finalizar compra")
-            print("  4. Ver carrito             9. Salir")
+            print("  1. Mostrar catalogo")
+            print("  2. Buscar producto")
+            print("  3. Agregar producto al carrito")
+            print("  4. Ver carrito")
             print("  5. Modificar cantidad")
+            print("  6. Eliminar producto")
+            print("  7. Vaciar carrito")
+            print("  8. Finalizar compra")
+            print("  9. Salir")
             opcion = input("Seleccione una opcion: ").strip()
 
             if opcion == "1":
@@ -238,7 +251,9 @@ class Tienda:
             elif opcion == "8":
                 self.finalizar_compra()
             elif opcion == "9":
-                print("\n  Gracias por usar el programa. Hasta pronto!")
+                print("\n  Gracias por usar el programa.")
+                print("  Hasta pronto!")
+                print("\n  Programa finalizado.")
                 break
             else:
                 print("  Opcion no valida, intente de nuevo.")
