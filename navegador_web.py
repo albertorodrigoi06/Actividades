@@ -1,14 +1,7 @@
-# Proyecto de Pilas - Navegador Web
-# Materia: Estructuras de Datos
-# Alumno: Rodrigo Iglesias
-#
-# Simula el historial de un navegador web usando dos PILAS (LIFO):
-#   - Pila atras   (back stack):    paginas visitadas anteriormente
-#   - Pila adelante (forward stack): paginas a las que se puede avanzar
-#                                    despues de haber retrocedido
 
 
-MAXIMO = 10      # capacidad maxima de cada pila
+
+MAXIMO = 10     
 
 
 # ==================== CLASES ====================
