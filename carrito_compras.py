@@ -1,10 +1,4 @@
-# Proyecto de Listas - Carrito de Compras
-# Materia: Estructuras de Datos
-# Alumno: Rodrigo Iglesias
-#
-# Simula un carrito de compras de una tienda.
-# La informacion se guarda en memoria usando LISTAS y el programa
-# esta hecho con programacion orientada a objetos.
+
 
 
 # ==================== CLASES ====================
