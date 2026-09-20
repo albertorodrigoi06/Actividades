@@ -1,13 +1,4 @@
-"""
-PROYECTO COLA DE IMPRESIÓN (FIFO - First In, First Out)
 
-Simula una impresora compartida por 5 computadoras (PC1 a PC5).
-Los trabajos se agregan al FINAL de la cola y se imprimen desde el FRENTE,
-respetando el orden de llegada.
-
-La cola se implementa con un arreglo (lista de Python) de capacidad fija.
-Versión de consola (CLI).
-"""
 
 import random
 
