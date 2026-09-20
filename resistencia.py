@@ -1,12 +1,4 @@
-# ==========================================================
-# Proyecto de Arreglos - Resistencia Electrica
-# Materia: Estructuras de Datos
-# Alumno: Rodrigo Iglesias
-#
-# El programa calcula los colores de una resistencia a partir
-# de su valor, y el valor total de n resistencias conectadas
-# en serie y en paralelo. Todo funciona por linea de comandos.
-# ==========================================================
+
 
 import random
 
