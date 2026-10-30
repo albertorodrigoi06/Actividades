@@ -1,0 +1,126 @@
+import random
+import time
+
+
+
+
+def tiempo_a_texto(segundos):
+    minutos = segundos // 60
+    seg = segundos % 60
+    if seg < 10:
+        return str(minutos) + ":0" + str(seg)
+    return str(minutos) + ":" + str(seg)
+
+
+def burbuja(lista):
+    n = len(lista)
+    for i in range(n - 1):
+        for j in range(n - 1 - i):
+            if lista[j][1] > lista[j + 1][1]:
+                aux = lista[j]
+                lista[j] = lista[j + 1]
+                lista[j + 1] = aux
+
+
+def seleccion(lista):
+    n = len(lista)
+    for i in range(n - 1):
+        menor = i
+        for j in range(i + 1, n):
+            if lista[j][1] < lista[menor][1]:
+                menor = j
+        aux = lista[i]
+        lista[i] = lista[menor]
+        lista[menor] = aux
+
+
+def insercion(lista):
+    for i in range(1, len(lista)):
+        actual = lista[i]
+        j = i - 1
+        while j >= 0 and lista[j][1] > actual[1]:
+            lista[j + 1] = lista[j]
+            j = j - 1
+        lista[j + 1] = actual
+
+
+def shell(lista):
+    n = len(lista)
+    salto = n // 2
+    while salto > 0:
+        for i in range(salto, n):
+            actual = lista[i]
+            j = i
+            while j >= salto and lista[j - salto][1] > actual[1]:
+                lista[j] = lista[j - salto]
+                j = j - salto
+            lista[j] = actual
+        salto = salto // 2
+
+
+def quicksort(lista):
+    if len(lista) <= 1:
+        return lista
+    pivote = lista[0]
+    menores = []
+    mayores = []
+    for i in range(1, len(lista)):
+        if lista[i][1] < pivote[1]:
+            menores.append(lista[i])
+        else:
+            mayores.append(lista[i])
+    return quicksort(menores) + [pivote] + quicksort(mayores)
+
+
+
+
+
+corredores = []
+for i in range(1, 151):
+    tiempo = random.randint(7200, 18000)
+    corredores.append([i, tiempo])
+
+
+print("TIEMPO DE CADA ALGORITMO (en milisegundos)")
+
+copia = corredores.copy()
+inicio = time.perf_counter()
+burbuja(copia)
+fin = time.perf_counter()
+print("Burbuja:   ", (fin - inicio) * 1000)
+
+copia = corredores.copy()
+inicio = time.perf_counter()
+seleccion(copia)
+fin = time.perf_counter()
+print("Seleccion: ", (fin - inicio) * 1000)
+
+copia = corredores.copy()
+inicio = time.perf_counter()
+insercion(copia)
+fin = time.perf_counter()
+print("Insercion: ", (fin - inicio) * 1000)
+
+copia = corredores.copy()
+inicio = time.perf_counter()
+shell(copia)
+fin = time.perf_counter()
+print("Shell:     ", (fin - inicio) * 1000)
+
+copia = corredores.copy()
+inicio = time.perf_counter()
+copia = quicksort(copia)
+fin = time.perf_counter()
+print("Quicksort: ", (fin - inicio) * 1000)
+
+
+print()
+print("TABLA DE POSICIONES")
+posicion = 1
+for corredor in copia:
+    print(posicion, "- Corredor", corredor[0], "-", tiempo_a_texto(corredor[1]), "min:seg")
+    posicion = posicion + 1
+
+
+print()
+print("GANADOR: Corredor", copia[0][0], "con", tiempo_a_texto(copia[0][1]), "min:seg")
