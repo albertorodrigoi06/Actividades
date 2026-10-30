@@ -115,7 +115,7 @@ print("Quicksort: ", (fin - inicio) * 1000)
 
 
 print()
-print("TABLA DE POSICIONES")
+print("Tabla de puesto")
 posicion = 1
 for corredor in copia:
     print(posicion, "- Corredor", corredor[0], "-", tiempo_a_texto(corredor[1]), "min:seg")
@@ -123,4 +123,4 @@ for corredor in copia:
 
 
 print()
-print("GANADOR: Corredor", copia[0][0], "con", tiempo_a_texto(copia[0][1]), "min:seg")
+print("WINNER: Corredor", copia[0][0], "con", tiempo_a_texto(copia[0][1]), "min:seg")
