@@ -1,0 +1,54 @@
+empleados = [None for _ in range(10)]
+
+def calcular_hash(numero):
+    return numero % len(empleados)
+
+def agregar_empleado(numero):
+    posicion = calcular_hash(numero)
+
+    for intento in range(len(empleados)):
+        lugar = (posicion + intento) % len(empleados)
+
+        if empleados[lugar] is None:
+            empleados[lugar] = numero
+            return
+
+    print("No hay espacio disponible")
+
+
+def buscar_empleado(numero):
+    posicion = calcular_hash(numero)
+
+    for intento in range(len(empleados)):
+        lugar = (posicion + intento) % len(empleados)
+
+        if empleados[lugar] == numero:
+            return lugar
+
+        if empleados[lugar] is None:
+            break
+
+    return -1
+
+
+def ver_empleados():
+    print("\nTabla de empleados:")
+    for posicion, numero in enumerate(empleados):
+        print("Posición", posicion, ":", numero)
+
+
+total = int(input("Cantidad de empleados: "))
+
+for i in range(total):
+    codigo = int(input("Ingrese el código del empleado: "))
+    agregar_empleado(codigo)
+
+ver_empleados()
+
+codigo_buscar = int(input("\nCódigo del empleado que desea buscar: "))
+ubicacion = buscar_empleado(codigo_buscar)
+
+if ubicacion != -1:
+    print("Empleado encontrado en el índice", ubicacion)
+else:
+    print("El empleado no está registrado")
